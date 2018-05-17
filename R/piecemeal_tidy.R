@@ -5,14 +5,7 @@ library(fs)
 
 
 
-file <- "RawData/USAID_sitexIM_FY19Targets_B-S_5.16.18.xlsx"
-
-
-#import, filtering for USAID agencies only
-  df <- read_xlsx(file) %>% 
-    filter(OU == "Botswana",
-           funding_agency == "USAID")
-
+tidy <- function(df){
 #rename headers to match MER structured datasets
   df <- df %>% 
     rename(operatingunit = OU,
@@ -46,9 +39,9 @@ file <- "RawData/USAID_sitexIM_FY19Targets_B-S_5.16.18.xlsx"
   
   source("R/piecemeal_ou_export.R")
   
-  map(.x = ou_list, .f = ~ export(df, .x)) 
+  map(.x = ou_list, .f = ~ ou_export(df, .x)) 
 
-
+}
 
 
 
