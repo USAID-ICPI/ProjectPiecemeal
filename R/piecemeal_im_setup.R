@@ -71,7 +71,13 @@ setup <- function(df){
                "NewPregnant :  Positive", "FSW", "MSM not SW", "TG not SW", "People in prisons and other enclosed settings", 
                "Physical and/or Emotional Violence", "Sexual Violence (Post-Rape Care)")
   
-  df <- df %>% mutate(agesexother = factor(agesexother, levels = ordered))
+  df <- df %>% 
+    mutate(agesexother = factor(agesexother, levels = ordered))
+  
+  #reorder
+    df <- df %>% 
+      select(operatingunit, indicator, mechanismuid, primepartner, implementingmechanismname, psnu, agesexother, fy2019_targets)
+    
 }
 
 
