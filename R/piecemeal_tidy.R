@@ -28,17 +28,6 @@ tidy <- function(df){
   df <- df %>% 
     select(operatingunit:disaggregate, age, sex, resultstatus, modality, otherdisaggregate, fy2019_targets)
 
-#identify all OUs in df
-  ou_list <- unique(df$operatingunit)
-  
-#export
-  fs::dir_create("Output")
-  
-  source("R/piecemeal_ou_export.R")
-  
-  #capture selection to filter df to
-  purrr::map(.x = ou_list, .f = ~ ou_export(df, .x)) 
-
 }
 
 
