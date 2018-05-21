@@ -28,6 +28,7 @@ tidy <- function(df){
   df <- df %>% 
     select(operatingunit:disaggregate, age, sex, resultstatus, modality, otherdisaggregate, fy2019_targets)
 
+  return(df)
 }
 
 
