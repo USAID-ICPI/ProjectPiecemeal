@@ -7,7 +7,7 @@ setup <- function(df){
                                  "Age/Sex/Result/Modality", disaggregate),
            otherdisaggregate = ifelse(indicator == "PMTCT_STAT" & otherdisaggregate == "NewPregnant",
                                       paste(otherdisaggregate, ": ", resultstatus), otherdisaggregate),
-           mechanismuid = as.character(mechanismuid))
+           mechanismid = as.character(mechanismid))
   
   
   df_hts_pos <- df %>% 
@@ -44,7 +44,7 @@ setup <- function(df){
          "HTS_SELF",                     "Age/Sex/HIVSelfTest",   "Y"
       )
   
-  df <- inner_join(df, tokeep)
+  df <- inner_join(df, tokeep, by = c("indicator", "disaggregate"))
   
   rm(tokeep)
   
@@ -76,7 +76,7 @@ setup <- function(df){
   
   #reorder
     df <- df %>% 
-      select(operatingunit, indicator, mechanismuid, primepartner, implementingmechanismname, psnu, agesexother, fy2019_targets)
+      select(operatingunit, indicator, mechanismid, primepartner, implementingmechanismname, psnu, agesexother, fy2019_targets)
     
 }
 
