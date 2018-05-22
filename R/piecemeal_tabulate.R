@@ -6,7 +6,7 @@ ind_tabulate <- function(df, mech, ind){
              indicator == !!ind) 
     
   #store for saving purposes
-    ou <- df$operatingunit[1]
+    ou <- df_mech$operatingunit[1]
   
   #setup table (wide)
     df_mech <- df_mech %>% 
