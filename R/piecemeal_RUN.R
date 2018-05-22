@@ -47,8 +47,8 @@
 
   #list of mechs and indicators to loop over
     df_full <- df_targets %>% 
-      distinct(mechanismuid, indicator)
+      distinct(mechanismid, indicator)
 
   #generate output to export
-    map2(.x = df_full$mechanismuid, .y = df_full$indicator, 
+    map2(.x = df_full$mechanismid, .y = df_full$indicator, 
          .f = ~ tabulate(df_targets, .x, .y))
