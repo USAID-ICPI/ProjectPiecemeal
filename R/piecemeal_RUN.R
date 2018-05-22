@@ -11,6 +11,7 @@
     library(readxl)
     library(tidyverse)
     library(fs)
+    library(openxlsx)
 
   #functions
     source("R/piecemeal_tidy.R")
@@ -45,10 +46,15 @@
   #setup IM output
     df_targets <- setup(df_targets)
 
-  #list of mechs and indicators to loop over
+  #list of mechs and indicators to loop over & count for printing
     df_full <- df_targets %>% 
-      distinct(mechanismid, indicator)
+      distinct(operatingunit, mechanismid, indicator)%>%
+      arrange(operatingunit, mechanismid, indicator) %>% 
+      group_by(mechanismid) %>% 
+      mutate(i = row_number(),
+             t = max(i)) %>% 
+      ungroup() 
 
   #generate output to export
     map2(.x = df_full$mechanismid, .y = df_full$indicator, 
-         .f = ~ tabulate(df_targets, .x, .y))
+         .f = ~ ind_tabulate(df_targets, .x, .y))
