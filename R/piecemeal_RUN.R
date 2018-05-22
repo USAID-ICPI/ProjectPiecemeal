@@ -24,7 +24,8 @@
     files <- dir_ls("RawData", glob = "*.xlsx")
   
   #import & combine
-    df_targets <- map_dfr(.x = files, .f = ~read_xlsx(.x))
+    df_targets <- map_dfr(.x = files, 
+                          .f = ~read_xlsx(.x, col_types = "text"))
   
   #clean up & format 
     df_targets <- tidy(df_targets)
@@ -33,7 +34,7 @@
 # PHASE I - GENERIC OU FILES ----------------------------------------------
 
   #identify all OUs in df
-    ou_list <- unique(df$operatingunit)
+    ou_list <- unique(df_targets$operatingunit)
   
   #generate output for each export
     purrr::map(.x = ou_list, 
