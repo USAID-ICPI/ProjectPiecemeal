@@ -45,10 +45,10 @@
 # PHASE II - IM TABLES - PSNU X INDICATOR  --------------------------------
 
   #setup IM output
-    df_targets <- setup(df_targets)
+    df_targets_im <- setup(df_targets)
 
   #list of mechs and indicators to loop over & count for printing
-    df_full <- df_targets %>% 
+    df_full <- df_targets_im %>% 
       distinct(operatingunit, mechanismid, indicator)%>%
       arrange(operatingunit, mechanismid, indicator) %>% 
       group_by(mechanismid) %>% 
@@ -58,4 +58,4 @@
 
   #generate output to export
     map2(.x = df_full$mechanismid, .y = df_full$indicator, 
-         .f = ~ ind_tabulate(df_targets, .x, .y))
+         .f = ~ ind_tabulate(df_targets_im, .x, .y))
