@@ -63,7 +63,7 @@ setup <- function(df){
     summarise_at(vars(fy2019_targets), ~ sum(., na.rm = TRUE)) %>% 
     ungroup()
   
-  ordered <- c("Unknown Sex <1", "<= 2 months", "Male < 2 months", "NA 2 - 12 months", "Male 2 months - 9 years", "Unknown Sex 1-9", 
+  ordered <- c("Unknown Sex <1", "<= 2 months", "Male < 2 months", "2 - 12 months", "Male 2 months - 9 years", "Unknown Sex 1-9", 
                "Unknown Sex <5","Female 10-14", "Male 10-14", "Female <15", "Male <15", "Female 15+", "Male 15+", "Female 15-19", 
                "Male 15-19", "Female 15-17", "Male 15-17", "Female 18-24", "Male 18-24", "Female 20-24", "Male 20-24", "Female 25+", 
                "Male 25+", "Female 25-29", "Male 25-29", "Female 30-34", "Male 30-34", "Female 35-39", "Male 35-39", "Female 40-49", 

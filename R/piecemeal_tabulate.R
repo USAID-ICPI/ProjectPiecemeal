@@ -53,5 +53,5 @@ ind_tabulate <- function(df, mech, ind){
       saveWorkbook(wb, path, overwrite = T)
     
     #print to determine "location"
-    paste0(ou, ": ", mech, " - ", ind)
+    return(paste0(ou, ": ", mech, " - ", ind))
 }
