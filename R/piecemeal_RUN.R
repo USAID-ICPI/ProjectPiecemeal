@@ -18,6 +18,7 @@
     source("R/piecemeal_ou_export.R")
     source("R/piecemeal_im_setup.R")
     source("R/piecemeal_tabulate.R")
+    source("R/piecemeal_styles.R")
 
 # IMPORT & MUNGE ----------------------------------------------------------
 
