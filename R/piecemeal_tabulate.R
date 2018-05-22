@@ -15,8 +15,14 @@ ind_tabulate <- function(df, mech, ind){
       rename(!!ind := psnu) #table name in upper left hand corner
   
   #export to Excel
+    #create a new folder path if it doesn't already exist
+      ou_filepath <- file.path("Output", paste0(ou, "_COP18-Targets"))
+      
+    #create a new folder for the OU if it doesn't already exist
+      dir_create(ou_filepath)
+                 
     #create file path to save  
-      path <- file.path("Output", paste0(ou, "_COP18-Targets_Mech-", mech, ".xlsx"))
+      path <- file.path(ou_filepath, paste0(ou, "_COP18-Targets_Mech-", mech, ".xlsx"))
     
     #if the file doesn't exist add it otherwise, open it
       if(!file.exists(path)){
