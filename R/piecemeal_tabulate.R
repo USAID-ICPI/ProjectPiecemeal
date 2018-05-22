@@ -2,7 +2,6 @@ ind_tabulate <- function(df, mech, ind){
   
   #store for saving purposes
   ou <- df$operatingunit[1]
-  mechid <- df$mechanismid[1]
   
   #gen table
   df_mech <- df %>% 
