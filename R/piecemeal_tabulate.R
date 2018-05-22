@@ -1,15 +1,18 @@
 ind_tabulate <- function(df, mech, ind){
   
+  #filter to just the mechanism and indicator
+    df_mech <- df %>% 
+      filter(mechanismid == !!mech,
+             indicator == !!ind) 
+    
   #store for saving purposes
-  ou <- df$operatingunit[1]
+    ou <- df$operatingunit[1]
   
-  #gen table
-  df_mech <- df %>% 
-    filter(mechanismid == !!mech,
-           indicator == !!ind) %>%
-    select(psnu, agesexother, fy2019_targets) %>% 
-    spread(agesexother, fy2019_targets) %>% 
-    rename(!!ind := psnu) #table name in upper left hand corner
+  #setup table (wide)
+    df_mech <- df_mech %>% 
+      select(psnu, agesexother, fy2019_targets) %>% 
+      spread(agesexother, fy2019_targets) %>% 
+      rename(!!ind := psnu) #table name in upper left hand corner
   
   #export to Excel
     #create file path to save  
