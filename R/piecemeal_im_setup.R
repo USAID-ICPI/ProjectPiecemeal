@@ -11,7 +11,7 @@ setup <- function(df){
   
   
   df_hts_pos <- df %>% 
-    filter(indicator == "HTS_TST", disaggregate == "Age/Sex/Result/Modality") %>% 
+    filter(indicator == "HTS_TST", disaggregate == "Age/Sex/Result/Modality", resultstatus == "Positive") %>% 
     mutate(indicator = "HTS_TST_POS")
   
   df <- bind_rows(df, df_hts_pos)

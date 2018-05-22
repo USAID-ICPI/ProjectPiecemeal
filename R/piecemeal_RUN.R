@@ -28,7 +28,7 @@
   #import & combine
     df_targets <- map_dfr(.x = files, 
                           .f = ~read_xlsx(.x, col_types = "text"))
-  
+    rm(files)
   #clean up & format 
     df_targets <- tidy(df_targets)
 
