@@ -51,7 +51,7 @@ setup <- function(df){
   df <- df  %>% 
     mutate(agesexother = case_when(
                       indicator %in% c("GEND_GBV", "KP_PREV", "PMTCT_ART", "PMTCT_STAT") ~ otherdisaggregate,
-                      indicator == "OVC_HIVSTAT"                                         ~ "",
+                      indicator == "OVC_HIVSTAT"                                         ~ "Total Numerator",
                       indicator == "PMTCT_EID"                                           ~ age, 
                       TRUE                                                               ~ paste(sex, age)
     ))
@@ -69,7 +69,7 @@ setup <- function(df){
                "Male 25+", "Female 25-29", "Male 25-29", "Female 30-34", "Male 30-34", "Female 35-39", "Male 35-39", "Female 40-49", 
                "Male 40-49", "Female 50+", "Male 50+", "AlreadyPregnant", "NewPregnant", "KnownPregnant", "NewPregnant :  Negative", 
                "NewPregnant :  Positive", "FSW", "MSM not SW", "TG not SW", "People in prisons and other enclosed settings", 
-               "Physical and/or Emotional Violence", "Sexual Violence (Post-Rape Care)")
+               "Physical and/or Emotional Violence", "Sexual Violence (Post-Rape Care)", "Total Numerator")
   
   df <- df %>% 
     mutate(agesexother = factor(agesexother, levels = ordered))
