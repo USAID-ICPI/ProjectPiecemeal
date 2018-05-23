@@ -39,23 +39,39 @@
     ou_list <- unique(df_targets$operatingunit)
   
   #generate output for each export
-    purrr::map(.x = ou_list, 
-               .f = ~ ou_export(df_targets, .x))  
+    map(.x = ou_list, 
+        .f = ~ ou_export(df_targets, .x))  
   
 # PHASE II - IM TABLES - PSNU X INDICATOR  --------------------------------
 
   #setup IM output
-    df_targets_im <- setup(df_targets)
+    df_targets_im <- setup(df_targets, "indicator")
 
-  #list of mechs and indicators to loop over & count for printing
-    df_full <- df_targets_im %>% 
-      distinct(operatingunit, mechanismid, indicator)%>%
-      arrange(operatingunit, mechanismid, indicator) %>% 
-      group_by(mechanismid) %>% 
-      mutate(i = row_number(),
-             t = max(i)) %>% 
-      ungroup() 
+  #list of mechs and indicators to loop over
+    df_mechind <-  distinct(df_targets_im, operatingunit, mechanismid, indicator)
 
   #generate output to export
-    map2(.x = df_full$mechanismid, .y = df_full$indicator, 
+    map2(.x = df_mechind$mechanismid, .y = df_mechind$indicator, 
          .f = ~ ind_tabulate(df_targets_im, .x, .y))
+      rm(df_targets_im, df_mechind)
+
+# PHASE III - IMS BY SITE -------------------------------------------------
+
+  #setup site reporting output
+    df_sitereporting <- setup(df_targets, "site") 
+  
+  #list of mechs to loop over
+    df_mech <- distinct(df_sitereporting, operatingunit, mechanismid)
+    
+  #generate output to export
+    map(.x = df_mech$mechanismid, 
+        .f = ~ ind_tabulate(df_sitereporting, .x, "SiteReporting"))
+     rm(df_sitereporting, df_mech)
+
+# ZIP FOLDERS -------------------------------------------------------------
+
+  setwd("Output")
+  folders <- dir_ls()
+  map(.x = folders, .f = ~ zip(.x, .x))
+  setwd("..")
+    

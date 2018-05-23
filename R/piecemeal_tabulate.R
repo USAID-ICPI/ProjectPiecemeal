@@ -1,18 +1,28 @@
 ind_tabulate <- function(df, mech, ind){
   
-  #filter to just the mechanism and indicator
-    df_mech <- df %>% 
-      filter(mechanismid == !!mech,
-             indicator == !!ind) 
+  #filter to just the mechanism
+    df_mech <- filter(df, mechanismid == !!mech)
     
+  #filter for the indicator 
+    if(ind != "SiteReporting"){
+      df_mech <- filter(df_mech, indicator == !!ind)
+    }
+              
   #store for saving purposes
     ou <- df_mech$operatingunit[1]
   
   #setup table (wide)
-    df_mech <- df_mech %>% 
-      select(psnu, agesexother, fy2019_targets) %>% 
-      spread(agesexother, fy2019_targets) %>% 
-      rename(!!ind := psnu) #table name in upper left hand corner
+    if(ind != "SiteReporting"){
+      df_mech <- df_mech %>% 
+        select(psnu, agesexother, fy2019_targets) %>% 
+        spread(agesexother, fy2019_targets) %>% 
+        rename(!!ind := psnu) #table name in upper left hand corner
+    } else {
+      df_mech <- df_mech %>% 
+        select(-operatingunit, -mechanismid) %>% 
+        spread(indicator, reporting) %>% 
+        rename(!!ind := site) #table name in upper left hand corner
+    }
   
   #export to Excel
     #create a new folder path if it doesn't already exist
@@ -48,16 +58,22 @@ ind_tabulate <- function(df, mech, ind){
       #psnus
       addStyle(wb, ind, style_psnus, rows = 2:n_row, cols = 1)
       #values
-      addStyle(wb, ind, style_values, rows = 2:m, cols = 2:m, gridExpand = TRUE)
+      if(ind != "SiteReporting"){
+        addStyle(wb, ind, style_values, rows = 2:m, cols = 2:m, gridExpand = TRUE)
+      } else {
+        addStyle(wb, ind, style_reporting, rows = 2:m, cols = 2:m, gridExpand = TRUE)
+      }
       
     #adjust width/height  
+      if(ind != "SiteReporting"){
+        w <- 20L
+      } else {
+        w <- 50L
+      }
       #increase the width for the psnu column
-      setColWidths(wb, ind, cols=1, widths = 20)
+      setColWidths(wb, ind, cols=1, widths = w)
       #increase the row height for the headers
       setRowHeights(wb, ind, rows = 1, heights = 30)
     #save
       saveWorkbook(wb, path, overwrite = T)
-    
-    #print to determine "location"
-    return(paste0(ou, ": ", mech, " - ", ind))
 }

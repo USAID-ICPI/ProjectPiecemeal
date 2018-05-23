@@ -29,8 +29,10 @@ tidy <- function(df){
   
   #limit to just relevent columns
     df <- df %>% 
-      select(operatingunit:disaggregate, age, sex, resultstatus, modality, otherdisaggregate, fy2019_targets)
-  
+      select(operatingunit:disaggregate, age, sex, resultstatus, modality, otherdisaggregate, fy2019_targets) %>% 
+  #arrange
+      arrange(operatingunit, mechanismid, indicator)
+    
     return(df)
 }
 

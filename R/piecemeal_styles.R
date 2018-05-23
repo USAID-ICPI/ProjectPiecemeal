@@ -12,5 +12,7 @@
   
   style_values <- createStyle(numFmt = "#,##0")
   
+  style_reporting <- createStyle(halign = "center")
+  
   
   
